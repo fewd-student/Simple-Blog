@@ -20,6 +20,12 @@ get_header(); // This fxn gets the header.php file and renders it
 					<?php // the author(); Uncomment this and it will display the post author ?>
 				</div>
 				<div>
+					<?php
+						// draw the thumbnail is there is one
+						if ( has_post_thumbnail() ) {
+							the_post_thumbnail( 'featured-image' );
+						}
+					?>
 					<?php the_content();
 					// This call the main content of the post, the stuff in the main text box while composing.
 					// This will wrap everything in p tags

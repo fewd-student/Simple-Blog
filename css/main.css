@@ -1,0 +1,40 @@
+
+	body {
+		font-family: 'Merriweather', Georgia, serif;
+		line-height: 1.6;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+
+	.listing_article_title {
+		border-bottom: 5px solid #44BBD5;
+		color: #222;
+		font-size: 44px;
+		font-weight: 900;
+		line-height: 1.2;
+		padding: 0 0 20px;
+	}
+
+	.listing_article_title a {
+		color: #222;
+	}
+
+
+	@media screen and (min-width: 980px) {
+
+		.listing_article:nth-child(3n+1) {
+			clear: both;
+		}
+
+	}
+
+	.nav a {
+
+	}
+
+	.nav ul {
+		list-style: none;
+	}

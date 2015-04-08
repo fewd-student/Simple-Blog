@@ -12,16 +12,21 @@
 	// Do we have any posts in the databse that match our query?
 	// In the case of the home page, this will call for the most recent posts
 	?>
-		<?php while ( have_posts() ) : the_post();
+		<?php
+			$i = 0;
+
+			while ( have_posts() ) : the_post();
 		// If we have some posts to show, start a loop that will display each one the same way
 		?>
-			<article>
-				<h1>
-					<a href="<?php the_permalink(); // Get the link to this post ?>" title="<?php the_title(); ?>">
-						<?php the_title(); // Show the title of the posts as a link ?>
-					</a>
-				</h1>
-				<div>
+			<article class="fs-row <?php if (is_home() && $i === 0) echo 'listing_article_first' ?>">
+				<div class="fs-cell">
+					<h1 class="listing_article_title">
+						<a href="<?php the_permalink(); // Get the link to this post ?>" title="<?php the_title(); ?>">
+							<?php the_title(); // Show the title of the posts as a link ?>
+						</a>
+					</h1>
+				</div>
+				<div class="fs-cell fs-lg-4">
 					<?php the_time('m/d/Y'); // Display the time published ?> |
 					<?php if( comments_open() ) : // If we have comments open on this post, display a link and count of them ?>
 						<span>
@@ -30,22 +35,32 @@
 							?>
 						</span>
 					<?php endif; ?>
+					<div><?php echo get_the_category_list(); // Display the categories this post belongs to, as links ?></div>
+					<div><?php echo get_the_tag_list( '| &nbsp;', '&nbsp;' ); // Display the tags this post has, as links separated by spaces and pipes ?></div>
 				</div>
-				<div>
-					<?php the_content( 'Continue...' );
+				<div class="fs-cell fs-lg-8">
+					<?php
+						// draw the thumbnail is there is one
+						if ( has_post_thumbnail() ) {
+							the_post_thumbnail( 'featured-thumb' , array("class" => "listing_article_image") );
+						}
+					?>
+
+					<?php the_excerpt();
 					// This call the main content of the post, the stuff in the main text box while composing.
 					// This will wrap everything in p tags and show a link as 'Continue...' where/if the
 					// author inserted a <!-- more --> link in the post body
 					?>
 
+					<a href="<?php the_permalink(); ?>">Continue Reading</a>
+
 					<?php wp_link_pages(); // This will display pagination links, if applicable to the post ?>
 				</div><!-- the-content -->
-				<div>
-					<div><?php echo get_the_category_list(); // Display the categories this post belongs to, as links ?></div>
-					<div><?php echo get_the_tag_list( '| &nbsp;', '&nbsp;' ); // Display the tags this post has, as links separated by spaces and pipes ?></div>
-				</div>
 			</article>
-		<?php endwhile; // OK, let's stop the posts loop once we've exhausted our query/number of posts ?>
+		<?php
+				$i++;
+
+			endwhile; // OK, let's stop the posts loop once we've exhausted our query/number of posts ?>
 	<nav>
 		<?php previous_posts_link( 'newer' ); // Display a link to  newer posts, if there are any, with the text 'newer' ?>
 		<?php next_posts_link( 'older' ); // Display a link to  older posts, if there are any, with the text 'older' ?>
